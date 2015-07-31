@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.abloz.UserMapper">
+    <!-- 查询一个对象 -->
+    <select id="selectOneUser" parameterType="int" resultType="User"><!-- User 使用了别名，也可直接用类完全限定名替换。建议用别名更灵活 -->
+        SELECT id,name,age,created FROM user WHERE id=#{id}
+    </select>
+    <!-- 查询多个对象 -->
+    <select id="selectAllUsers" resultType="User">
+        SELECT id,name,created FROM user
+    </select>
+    <!-- 增加一条记录 -->
+    <insert id="insertUser" parameterType="User" flushCache="true" statementType="PREPARED">
+        INSERT INTO user (id,name,age,created) VALUES (#{id},#{name},#{age},#{created})
+    </insert>
+    <!-- 更新 -->
+    <update id="updateUser" parameterType="User">
+        UPDATE user set name=#{name},created=#{created} WHERE id=#{id}
+    </update>
+    <!-- 删除 -->
+    <delete id="deleteUser" parameterType="int">
+        delete from user where id=#{id}
+    </delete>
+    <!-- 从上面的可以看对，对数据库表的CRUD操作，映射文件中分别用了四个标签insert、select、update、delete来指定sql语句、传入参数类型和结果集类型 -->
+</mapper>
